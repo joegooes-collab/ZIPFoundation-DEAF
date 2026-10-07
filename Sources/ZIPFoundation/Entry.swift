@@ -128,6 +128,19 @@ public struct Entry: Equatable {
     public var fileAttributes: [FileAttributeKey: Any] {
         return FileManager.attributes(from: self)
     }
+    /// The raw ZIP central-directory external file attributes.
+    ///
+    /// This value is exposed read-only so callers can preserve
+    /// archive metadata that is more specific than `EntryType`.
+    public var rawExternalFileAttributes: UInt32 {
+        return self.centralDirectoryStructure.externalFileAttributes
+    }
+
+    /// The raw ZIP central-directory "version made by" value.
+    public var rawVersionMadeBy: UInt16 {
+        return self.centralDirectoryStructure.versionMadeBy
+    }
+
     /// The `CRC32` checksum of the receiver.
     ///
     /// - Note: Always returns `0` for entries of type `EntryType.directory`.
